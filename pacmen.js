@@ -11,9 +11,9 @@ function setToRandom(scale) {
 // Factory to make a PacMan at a random position with random velocity
 function makePac() {
   // Generate random velocity and position
-  let velocity = setToRandom(10); // {x: ?, y: ?}
-  let position = setToRandom(200); // {x: ?, y: ?}
-
+  let velocity = setToRandom(10); // Random velocity in the x and y directions
+  let position = setToRandom(window.innerWidth - 100); // Ensure position is within the screen bounds
+  
   // Add image to div id='game'
   let game = document.getElementById('game');
   let newimg = document.createElement('img');
@@ -53,9 +53,13 @@ function update() {
 
 function checkCollisions(item) {
   // Detect collision with walls and make the PacMan bounce
+
+  // Check collision with right or left wall
   if (item.position.x + item.newimg.width > window.innerWidth || item.position.x < 0) {
     item.velocity.x = -item.velocity.x; // Reverse x direction
   }
+
+  // Check collision with bottom or top wall
   if (item.position.y + item.newimg.height > window.innerHeight || item.position.y < 0) {
     item.velocity.y = -item.velocity.y; // Reverse y direction
   }
