@@ -10,67 +10,71 @@ function setToRandom(scale) {
 
 // Factory to make a PacMan at a random position with random velocity
 function makePac() {
-  // Generate random velocity and position
-  let velocity = setToRandom(10); // Random velocity in the x and y directions
-  let position = setToRandom(window.innerWidth - 100); // Ensure position is within the screen bounds
-  
-  // Add image to div id='game'
+  // returns an object with random values scaled {x: 33, y: 21}
+  let velocity = setToRandom(10); // {x:?, y:?}
+  let position = setToRandom(200);
+
+  // Add image to div id = game
   let game = document.getElementById('game');
   let newimg = document.createElement('img');
   newimg.style.position = 'absolute';
-  newimg.src = './images/PacMan1.png'; // Set image source
+  newimg.src = './images/PacMan1.png';
   newimg.width = 100;
 
-  // Set the initial position of the PacMan image
-  newimg.style.left = `${position.x}px`;
-  newimg.style.top = `${position.y}px`;
-
-  // Add the new PacMan image to the game div
+  // TODO: set position here
+  // document.getElementById('addBtn').addEventListener("click", );
+  // let x = 100;
+  // let y =100;
+  // function pacmanImg() {
+  //   return pacman('<img scr=')
+  // }
+  newimg.style.left=position.x;
+  newimg.style.top=position.y;
   game.appendChild(newimg);
 
-  // Return an object with the PacMan's details
+  // TODO add new Child image to game
+  //game.appendChild(/* TODO: add parameter */);
+
+  // return details in an object
   return {
     position,
     velocity,
     newimg,
   };
-}
+} 
 
 function update() {
-  // Loop over all pacmen and update their positions
+  // loop over pacmen array and move each one and move image in DOM
   pacMen.forEach((item) => {
-    checkCollisions(item); // Check for collisions with walls
+    checkCollisions(item);
     item.position.x += item.velocity.x;
     item.position.y += item.velocity.y;
 
-    // Update the position of the image in the DOM
-    item.newimg.style.left = `${item.position.x}px`;
-    item.newimg.style.top = `${item.position.y}px`;
+    item.newimg.style.left = item.position.x;
+    item.newimg.style.top = item.position.y;
   });
-  // Call update function every 20ms to animate the PacMen
   setTimeout(update, 20);
 }
 
 function checkCollisions(item) {
-  // Detect collision with walls and make the PacMan bounce
-
-  // Check collision with right or left wall
-  if (item.position.x + item.newimg.width > window.innerWidth || item.position.x < 0) {
-    item.velocity.x = -item.velocity.x; // Reverse x direction
-  }
-
-  // Check collision with bottom or top wall
-  if (item.position.y + item.newimg.height > window.innerHeight || item.position.y < 0) {
-    item.velocity.y = -item.velocity.y; // Reverse y direction
-  }
+  // TODO: detect collision with all walls and make pacman bounce
+  if(
+    item.position.x + item.velocity.x + item.newimg.width > window.innerWidth ||
+    item.position.x + item.velocity.x < 0
+  )
+  item.velocity.x = -item.velocity.x;
+  if (
+    item.position.y + item.velocity.y + item.newimg.height > window.innerHeight ||
+    item.position.y + item.velocity.y < 0
+  )
+  item.velocity.y = -item.velocity.y;
 }
 
 function makeOne() {
-  // Add a new PacMan to the array and display it
-  pacMen.push(makePac());
+  pacMen.push(makePac()); // add a new PacMan
 }
 
-// Don't change this line
+//don't change this line
 if (typeof module !== 'undefined') {
   module.exports = { checkCollisions, update, pacMen };
 }
